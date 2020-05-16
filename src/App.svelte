@@ -4,14 +4,14 @@
   import { beforeUpdate, afterUpdate, onMount } from "svelte";
 
   let todos = [];
+  let todoText;
+  let totalTodos, totalCompleated, totalUncompleated;
+  let isCompleted,
+    isUncompleated = false;
 
   onMount(() => {
     todos = JSON.parse(localStorage.getItem("todos")) || [];
   });
-
-  let todoText, todoEditText;
-  let isCompleted,
-    isActive = false;
 
   const saveToStorage = () => {
     localStorage.setItem("todos", JSON.stringify(todos));
@@ -30,7 +30,7 @@
     saveToStorage();
   };
 
-  const handleEdit = (e, id) => {
+  const handleEditTodo = (e, id) => {
     const editedTodoText = e.target.textContent.trim();
 
     if (e.key === "Enter" || e.type === "blur") {
@@ -55,23 +55,30 @@
     }
   };
 
-  const toggleCompleated = () => {
-    isCompleted = true;
-    isActive = false;
+  const todoListStats = () => {
+    totalTodos = todos.length;
+    totalCompleated = todos.filter((todo) => todo.completed).length;
+    totalUncompleated = totalTodos - totalCompleated;
   };
 
-  const toggleActive = () => {
-    isActive = true;
+  const toggleCompleated = () => {
+    isCompleted = true;
+    isUncompleated = false;
+  };
+
+  const toggleUncompleated = () => {
+    isUncompleated = true;
     isCompleted = false;
   };
 
   const toggleAll = () => {
-    isActive = false;
+    isUncompleated = false;
     isCompleted = false;
   };
 
   afterUpdate(() => {
     console.log(todos);
+    todoListStats();
   });
 </script>
 
@@ -147,7 +154,7 @@
 
     {#each todos as todo (todo.id)}
       <div
-        class={isActive && todo.completed ? 'hidden' : isCompleted && !todo.completed ? 'hidden' : 'todo-item'}>
+        class={isUncompleated && todo.completed ? 'hidden' : isCompleted && !todo.completed ? 'hidden' : 'todo-item'}>
         <input
           type="checkbox"
           bind:checked={todo.completed}
@@ -157,8 +164,8 @@
           class="todo-text"
           class:completed={todo.completed}
           contenteditable="true"
-          on:keydown={(e) => handleEdit(e, todo.id)}
-          on:blur={(e) => handleEdit(e, todo.id)}>
+          on:keydown={(e) => handleEditTodo(e, todo.id)}
+          on:blur={(e) => handleEditTodo(e, todo.id)}>
           {todo.text}
         </div>
         <button class="todo-delete" on:click={() => handleDeleteTodo(todo.id)}>
@@ -169,8 +176,10 @@
 
   </div>
   <div class="filters">
-    <button on:click={toggleCompleated}>Completed</button>
-    <button on:click={toggleActive}>Active</button>
-    <button on:click={toggleAll}>All</button>
+    <button on:click={toggleCompleated}>Completed: {totalCompleated}</button>
+    <button on:click={toggleUncompleated}>
+      Uncompleated: {totalUncompleated}
+    </button>
+    <button on:click={toggleAll}>All: {totalTodos}</button>
   </div>
 </div>
