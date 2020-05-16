@@ -5,9 +5,12 @@
 
   let todos = [];
   let todoText;
-  let totalTodos, totalCompleated, totalUncompleated;
   let isCompleted,
     isUncompleated = false;
+
+  $: totalTodos = todos.length;
+  $: totalCompleated = todos.filter((todo) => todo.completed).length;
+  $: totalUncompleated = totalTodos - totalCompleated;
 
   onMount(() => {
     todos = JSON.parse(localStorage.getItem("todos")) || [];
@@ -55,12 +58,6 @@
     }
   };
 
-  const todoListStats = () => {
-    totalTodos = todos.length;
-    totalCompleated = todos.filter((todo) => todo.completed).length;
-    totalUncompleated = totalTodos - totalCompleated;
-  };
-
   const toggleCompleated = () => {
     isCompleted = true;
     isUncompleated = false;
@@ -78,7 +75,6 @@
 
   afterUpdate(() => {
     console.log(todos);
-    todoListStats();
   });
 </script>
 
@@ -110,7 +106,9 @@
   }
 
   .todo-text {
-    margin-left: 20px;
+    margin-left: 10px;
+    padding: 5px;
+    flex: 1;
   }
 
   .todo-delete {
@@ -175,6 +173,7 @@
     {/each}
 
   </div>
+  <h3>Todo list filters and stats</h3>
   <div class="filters">
     <button on:click={toggleCompleated}>Completed: {totalCompleated}</button>
     <button on:click={toggleUncompleated}>
