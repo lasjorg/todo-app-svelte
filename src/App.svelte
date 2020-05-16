@@ -30,18 +30,6 @@
     saveToStorage();
   };
 
-  const handleCompleated = (id) => {
-    todos = todos.map((todo) => {
-      if (todo.id === id) {
-        // I'm confused why this is correct?
-        todo.completed = todo.completed ? true : false;
-        return todo;
-      }
-      return todo;
-    });
-    saveToStorage();
-  };
-
   const handleEdit = (e, id) => {
     const editedTodoText = e.target.textContent.trim();
 
@@ -163,8 +151,8 @@
         <input
           type="checkbox"
           bind:checked={todo.completed}
-          on:change={() => handleCompleated(todo.id)}
-          class="checkbox" />
+          class="checkbox"
+          on:change={() => saveToStorage()} />
         <div
           class="todo-text"
           class:completed={todo.completed}
