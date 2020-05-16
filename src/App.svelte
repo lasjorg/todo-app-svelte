@@ -1,6 +1,8 @@
 <script>
   // import uuid from "uuid-v4";
   import { v4 as uuidv4 } from "uuid";
+  import AddTodo from "./components/AddTodo.svelte";
+  import TodoList from "./components/TodoList.svelte";
   import { beforeUpdate, afterUpdate, onMount } from "svelte";
 
   let todos = [];
@@ -144,13 +146,21 @@
 
 <div class="container">
   <h1>Your Todos, make them happen</h1>
-  <form on:submit|preventDefault={handleAddTodo}>
+  <AddTodo {handleAddTodo} {todoText} />
+  <!-- <form on:submit|preventDefault={handleAddTodo}>
     <input bind:value={todoText} class="new-todo" placeholder="Add new todo" />
     <button type="submit">Add todo</button>
-  </form>
+  </form> -->
   <div class="todos">
+    <TodoList
+      {todos}
+      {isCompleted}
+      {isUncompleated}
+      {saveToStorage}
+      {handleEditTodo}
+      {handleDeleteTodo} />
 
-    {#each todos as todo (todo.id)}
+    <!-- {#each todos as todo (todo.id)}
       <div
         class={isUncompleated && todo.completed ? 'hidden' : isCompleted && !todo.completed ? 'hidden' : 'todo-item'}>
         <input
@@ -170,7 +180,7 @@
           Delete todo
         </button>
       </div>
-    {/each}
+    {/each} -->
 
   </div>
   <h3>Todo list filters and stats</h3>
