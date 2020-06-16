@@ -1,10 +1,28 @@
 <script>
-  export let todoText;
-  export let handleAddTodo;
+  import { createEventDispatcher } from "svelte";
+  let todoText;
+  // export let handleAddTodo;
+
+  const dispatch = createEventDispatcher();
+
+  const handleAddTodo = () => {
+    dispatch("addTodo", {
+      todoText,
+    });
+    todoText = "";
+  };
 </script>
 
 <style>
+  form {
+    width: 100%;
+    display: flex;
+  }
 
+  .new-todo {
+    width: 100%;
+    flex: 1;
+  }
 </style>
 
 <form on:submit|preventDefault={handleAddTodo}>

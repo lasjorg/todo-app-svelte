@@ -1,15 +1,13 @@
 <script>
   import TodoItem from "./TodoItem.svelte";
-  export let todos,
-    isCompleted,
-    isUncompleated,
-    saveToStorage,
-    handleEditTodo,
-    handleDeleteTodo;
+  export let todos, isCompleted, isUncompleated;
 </script>
 
 <style>
-
+  .todos {
+    width: 100%;
+    margin-top: 20px;
+  }
 </style>
 
 <div class="todos">
@@ -19,9 +17,9 @@
       {todo}
       {isCompleted}
       {isUncompleated}
-      {saveToStorage}
-      {handleEditTodo}
-      {handleDeleteTodo} />
+      on:deleteTodo
+      on:editTodo
+      on:checkTodo />
   {/each}
 
 </div>

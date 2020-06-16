@@ -22,7 +22,7 @@
     localStorage.setItem("todos", JSON.stringify(todos));
   };
 
-  const handleAddTodo = (e) => {
+  const handleAddTodo = ({ detail: { todoText } }) => {
     if (todoText) {
       todos = [...todos, { id: uuidv4(), completed: false, text: todoText }];
       todoText = "";
@@ -30,27 +30,27 @@
     }
   };
 
-  const handleDeleteTodo = (id) => {
-    todos = todos.filter((todo) => todo.id !== id);
+  const handleDeleteTodo = (todoId) => {
+    todos = todos.filter((todo) => todo.id !== todoId);
     saveToStorage();
   };
 
-  const handleEditTodo = (e, id) => {
-    const editedTodoText = e.target.textContent.trim();
+  const handleEditTodo = ({ event, todoId, textContent: todoText }) => {
+    todoText = todoText.trim();
 
-    if (e.key === "Enter" || e.type === "blur") {
-      e.target.blur();
+    if (event.key === "Enter" || event.type === "blur") {
+      event.target.blur();
       // on empty input str set element text back to the original todo text
-      if (editedTodoText.length === 0) {
+      if (todoText.length === 0) {
         todos.forEach((todo) => {
-          if (todo.id === id) e.target.textContent = todo.text;
+          if (todo.id === todoId) event.target.textContent = todo.text;
         });
         return;
       }
 
       todos = todos.map((todo) => {
-        if (todo.id === id) {
-          todo.text = editedTodoText;
+        if (todo.id === todoId) {
+          todo.text = todoText;
           return todo;
         }
         return todo;
@@ -58,6 +58,17 @@
 
       saveToStorage();
     }
+  };
+
+  const handleChecked = ({ isChecked, todoId }) => {
+    todos = todos.map((todo) => {
+      if (todo.id === todoId) {
+        todo.completed = !todo.completed;
+        return todo;
+      }
+      return todo;
+    });
+    saveToStorage();
   };
 
   const toggleCompleated = () => {
@@ -95,47 +106,6 @@
     padding: 0 40px;
   }
 
-  .todos {
-    width: 100%;
-    margin-top: 20px;
-  }
-
-  .todo-item {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 20px;
-  }
-
-  .todo-text {
-    margin-left: 10px;
-    padding: 5px;
-    flex: 1;
-  }
-
-  .todo-delete {
-    margin-left: auto;
-  }
-
-  form {
-    width: 100%;
-    display: flex;
-  }
-
-  .new-todo {
-    width: 100%;
-    flex: 1;
-  }
-
-  .completed {
-    text-decoration: line-through;
-    color: grey;
-  }
-
-  .hidden {
-    display: none;
-  }
-
   .filters {
     display: flex;
     justify-content: space-between;
@@ -146,43 +116,16 @@
 
 <div class="container">
   <h1>Your Todos, make them happen</h1>
-  <AddTodo {handleAddTodo} {todoText} />
-  <!-- <form on:submit|preventDefault={handleAddTodo}>
-    <input bind:value={todoText} class="new-todo" placeholder="Add new todo" />
-    <button type="submit">Add todo</button>
-  </form> -->
-  <div class="todos">
-    <TodoList
-      {todos}
-      {isCompleted}
-      {isUncompleated}
-      {saveToStorage}
-      {handleEditTodo}
-      {handleDeleteTodo} />
+  <AddTodo on:addTodo={handleAddTodo} />
 
-    <!-- {#each todos as todo (todo.id)}
-      <div
-        class={isUncompleated && todo.completed ? 'hidden' : isCompleted && !todo.completed ? 'hidden' : 'todo-item'}>
-        <input
-          type="checkbox"
-          bind:checked={todo.completed}
-          class="checkbox"
-          on:change={() => saveToStorage()} />
-        <div
-          class="todo-text"
-          class:completed={todo.completed}
-          contenteditable="true"
-          on:keydown={(e) => handleEditTodo(e, todo.id)}
-          on:blur={(e) => handleEditTodo(e, todo.id)}>
-          {todo.text}
-        </div>
-        <button class="todo-delete" on:click={() => handleDeleteTodo(todo.id)}>
-          Delete todo
-        </button>
-      </div>
-    {/each} -->
+  <TodoList
+    {todos}
+    {isCompleted}
+    {isUncompleated}
+    on:deleteTodo={({ detail }) => handleDeleteTodo(detail)}
+    on:editTodo={({ detail }) => handleEditTodo(detail)}
+    on:checkTodo={({ detail }) => handleChecked(detail)} />
 
-  </div>
   <h3>Todo list filters and stats</h3>
   <div class="filters">
     <button on:click={toggleCompleated}>Completed: {totalCompleated}</button>
