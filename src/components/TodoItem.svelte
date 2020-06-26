@@ -1,16 +1,16 @@
 <script>
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher } from 'svelte';
   export let todo, isCompleted, isUncompleated;
 
   const dispatch = createEventDispatcher();
 
   const handleDeleteTodo = (todoId) => {
-    dispatch("deleteTodo", todoId);
+    dispatch('deleteTodo', todoId);
   };
 
   const handleEditTodo = (event, todoId) => {
     const { textContent } = event.target;
-    dispatch("editTodo", {
+    dispatch('editTodo', {
       event,
       todoId,
       textContent,
@@ -20,7 +20,7 @@
   const handleChecked = (event, todoId) => {
     const isChecked = event.target.checked;
 
-    dispatch("checkTodo", {
+    dispatch('checkTodo', {
       isChecked,
       todoId,
     });
@@ -28,19 +28,22 @@
 </script>
 
 <style>
-  .todo-text {
-    margin-left: 10px;
-    padding: 5px;
-    flex: 1;
-  }
-
   .todo-item {
     display: flex;
     align-items: center;
     width: 100%;
     margin-bottom: 20px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.3);
   }
-
+  .todo-text {
+    margin-left: 10px;
+    padding: 5px;
+    flex: 1;
+    outline: none;
+    border: none;
+    background: transparent;
+  }
   .completed {
     text-decoration: line-through;
     color: grey;
@@ -52,6 +55,8 @@
 
   .todo-delete {
     margin-left: auto;
+    display: flex;
+    padding: 2px;
   }
 </style>
 
@@ -71,6 +76,18 @@
     {todo.text}
   </div>
   <button class="todo-delete" on:click={() => handleDeleteTodo(todo.id)}>
-    Delete todo
+    <svg
+      viewBox="0 0 24 24"
+      width="24"
+      height="24"
+      stroke="currentColor"
+      stroke-width="2"
+      fill="none"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="css-i6dzq1">
+      <line x1="18" y1="6" x2="6" y2="18" />
+      <line x1="6" y1="6" x2="18" y2="18" />
+    </svg>
   </button>
 </div>
