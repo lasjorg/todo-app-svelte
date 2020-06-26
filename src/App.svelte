@@ -34,7 +34,7 @@
     saveToStorage();
   };
 
-  const handleEditTodo = ({ event, todoId, textContent: todoText }) => {
+  const handleEditTodo = ({ event, todoId, value: todoText }) => {
     todoText = todoText.trim();
 
     if (event.key === 'Enter' || event.type === 'blur') {
@@ -42,7 +42,7 @@
       // on empty input str set element text back to the original todo text
       if (todoText.length === 0) {
         todos.forEach((todo) => {
-          if (todo.id === todoId) event.target.textContent = todo.text;
+          if (todo.id === todoId) event.target.value = todo.text;
         });
         return;
       }

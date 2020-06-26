@@ -9,11 +9,11 @@
   };
 
   const handleEditTodo = (event, todoId) => {
-    const { textContent } = event.target;
+    const { value } = event.target;
     dispatch('editTodo', {
       event,
       todoId,
-      textContent,
+      value,
     });
   };
 
@@ -67,14 +67,20 @@
     class="checkbox"
     on:change={(e) => handleChecked(e, todo.id)}
     bind:checked={todo.completed} />
-  <div
+  <input
+    class="todo-text"
+    class:completed={todo.completed}
+    value={todo.text}
+    on:keydown={(e) => handleEditTodo(e, todo.id)}
+    on:blur={(e) => handleEditTodo(e, todo.id)} />
+  <!-- <div
     class="todo-text"
     class:completed={todo.completed}
     contenteditable="true"
     on:keydown={(e) => handleEditTodo(e, todo.id)}
     on:blur={(e) => handleEditTodo(e, todo.id)}>
     {todo.text}
-  </div>
+  </div> -->
   <button class="todo-delete" on:click={() => handleDeleteTodo(todo.id)}>
     <svg
       viewBox="0 0 24 24"
