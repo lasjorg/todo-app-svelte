@@ -59,7 +59,7 @@
     }
   };
 
-  const handleChecked = ({ isChecked, todoId }) => {
+  const handleChecked = ({ todoId }) => {
     todos = todos.map((todo) => {
       if (todo.id === todoId) {
         todo.completed = !todo.completed;

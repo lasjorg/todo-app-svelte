@@ -17,11 +17,8 @@
     });
   };
 
-  const handleChecked = (event, todoId) => {
-    const isChecked = event.target.checked;
-
+  const handleChecked = (todoId) => {
     dispatch('checkTodo', {
-      isChecked,
       todoId,
     });
   };
@@ -65,7 +62,7 @@
   <input
     type="checkbox"
     class="checkbox"
-    on:change={(e) => handleChecked(e, todo.id)}
+    on:change={() => handleChecked(todo.id)}
     bind:checked={todo.completed} />
   <input
     class="todo-text"
