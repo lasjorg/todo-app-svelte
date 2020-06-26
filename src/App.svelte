@@ -1,9 +1,8 @@
 <script>
-  // import uuid from "uuid-v4";
-  import { v4 as uuidv4 } from "uuid";
-  import AddTodo from "./components/AddTodo.svelte";
-  import TodoList from "./components/TodoList.svelte";
-  import { beforeUpdate, afterUpdate, onMount } from "svelte";
+  import { v4 as uuidv4 } from 'uuid';
+  import AddTodo from './components/AddTodo.svelte';
+  import TodoList from './components/TodoList.svelte';
+  import { beforeUpdate, afterUpdate, onMount } from 'svelte';
 
   let todos = [];
   let todoText;
@@ -15,17 +14,17 @@
   $: totalUncompleated = totalTodos - totalCompleated;
 
   onMount(() => {
-    todos = JSON.parse(localStorage.getItem("todos")) || [];
+    todos = JSON.parse(localStorage.getItem('todos')) || [];
   });
 
   const saveToStorage = () => {
-    localStorage.setItem("todos", JSON.stringify(todos));
+    localStorage.setItem('todos', JSON.stringify(todos));
   };
 
   const handleAddTodo = ({ detail: { todoText } }) => {
     if (todoText) {
       todos = [...todos, { id: uuidv4(), completed: false, text: todoText }];
-      todoText = "";
+      todoText = '';
       saveToStorage();
     }
   };
@@ -38,7 +37,7 @@
   const handleEditTodo = ({ event, todoId, textContent: todoText }) => {
     todoText = todoText.trim();
 
-    if (event.key === "Enter" || event.type === "blur") {
+    if (event.key === 'Enter' || event.type === 'blur') {
       event.target.blur();
       // on empty input str set element text back to the original todo text
       if (todoText.length === 0) {
@@ -115,7 +114,7 @@
 </style>
 
 <div class="container">
-  <h1>Your Todos, make them happen</h1>
+  <h1>Svelte Todo App</h1>
   <AddTodo on:addTodo={handleAddTodo} />
 
   <TodoList
