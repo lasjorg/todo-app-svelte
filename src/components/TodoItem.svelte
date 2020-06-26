@@ -70,14 +70,6 @@
     value={todo.text}
     on:keydown={(e) => handleEditTodo(e, todo.id)}
     on:blur={(e) => handleEditTodo(e, todo.id)} />
-  <!-- <div
-    class="todo-text"
-    class:completed={todo.completed}
-    contenteditable="true"
-    on:keydown={(e) => handleEditTodo(e, todo.id)}
-    on:blur={(e) => handleEditTodo(e, todo.id)}>
-    {todo.text}
-  </div> -->
   <button class="todo-delete" on:click={() => handleDeleteTodo(todo.id)}>
     <svg
       viewBox="0 0 24 24"
