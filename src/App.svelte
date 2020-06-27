@@ -3,7 +3,7 @@
   import AddTodo from './components/AddTodo.svelte';
   import TodoList from './components/TodoList.svelte';
   import TodoFilters from './components/TodoFilters.svelte';
-  import { beforeUpdate, afterUpdate, onMount } from 'svelte';
+  import { onMount } from 'svelte';
 
   let todos = [];
   let todoText;
@@ -85,10 +85,6 @@
     isUncompleated = false;
     isCompleted = false;
   };
-
-  // afterUpdate(() => {
-  //   console.log(todos);
-  // });
 </script>
 
 <style>
