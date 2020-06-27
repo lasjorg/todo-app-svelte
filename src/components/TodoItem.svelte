@@ -1,4 +1,5 @@
 <script>
+  import { fly, slide } from 'svelte/transition';
   import { createEventDispatcher } from 'svelte';
   export let todo, isCompleted, isUncompleated;
 
@@ -63,6 +64,8 @@
 </style>
 
 <div
+  in:fly={{ x: -200, duration: 300 }}
+  out:slide={{ duration: 200 }}
   class={isUncompleated && todo.completed ? 'hidden' : isCompleted && !todo.completed ? 'hidden' : 'todo-item box'}>
   <input
     type="checkbox"
