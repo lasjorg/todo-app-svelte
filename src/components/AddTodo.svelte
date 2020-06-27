@@ -1,15 +1,15 @@
 <script>
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher } from 'svelte';
   let todoText;
   // export let handleAddTodo;
 
   const dispatch = createEventDispatcher();
 
   const handleAddTodo = () => {
-    dispatch("addTodo", {
+    dispatch('addTodo', {
       todoText,
     });
-    todoText = "";
+    todoText = '';
   };
 </script>
 
@@ -26,6 +26,9 @@
 </style>
 
 <form on:submit|preventDefault={handleAddTodo}>
-  <input bind:value={todoText} class="new-todo" placeholder="Add new todo" />
-  <button type="submit">Add todo</button>
+  <input
+    bind:value={todoText}
+    class="new-todo input"
+    placeholder="Add new todo" />
+  <button class="button" type="submit">Add todo</button>
 </form>

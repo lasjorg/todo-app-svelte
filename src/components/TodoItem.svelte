@@ -28,18 +28,27 @@
   .todo-item {
     display: flex;
     align-items: center;
-    width: 100%;
+    /* width: 100%;
     margin-bottom: 20px;
-    padding: 10px;
-    background: rgba(0, 0, 0, 0.3);
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1),
+      0 0px 0 1px rgba(10, 10, 10, 0.02);
+    color: #4a4a4a;
+    padding: 1.25rem; */
   }
   .todo-text {
-    margin-left: 10px;
-    padding: 5px;
     flex: 1;
-    outline: none;
+    padding: 5px;
+    margin-left: 10px;
     border: none;
-    background: transparent;
+    box-shadow: none;
+  }
+
+  .todo-text:active,
+  .todo-text:focus {
+    box-shadow: none;
+    border: none;
   }
   .completed {
     text-decoration: line-through;
@@ -58,19 +67,19 @@
 </style>
 
 <div
-  class={isUncompleated && todo.completed ? 'hidden' : isCompleted && !todo.completed ? 'hidden' : 'todo-item'}>
+  class={isUncompleated && todo.completed ? 'hidden' : isCompleted && !todo.completed ? 'hidden' : 'todo-item box'}>
   <input
     type="checkbox"
     class="checkbox"
     on:change={() => handleChecked(todo.id)}
     bind:checked={todo.completed} />
   <input
-    class="todo-text"
+    class="todo-text is-size-5 input"
     class:completed={todo.completed}
     value={todo.text}
     on:keydown={(e) => handleEditTodo(e, todo.id)}
     on:blur={(e) => handleEditTodo(e, todo.id)} />
-  <button class="todo-delete" on:click={() => handleDeleteTodo(todo.id)}>
+  <button class="todo-delete button" on:click={() => handleDeleteTodo(todo.id)}>
     <svg
       viewBox="0 0 24 24"
       width="24"
