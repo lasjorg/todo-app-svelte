@@ -2,6 +2,7 @@
   import { v4 as uuidv4 } from 'uuid';
   import AddTodo from './components/AddTodo.svelte';
   import TodoList from './components/TodoList.svelte';
+  import TodoFilters from './components/TodoFilters.svelte';
   import { beforeUpdate, afterUpdate, onMount } from 'svelte';
 
   let todos = [];
@@ -96,7 +97,7 @@
   }
   .container {
     width: 100%;
-    max-width: 560px;
+    max-width: 680px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -104,25 +105,17 @@
     align-items: center;
     padding: 0 40px;
   }
-
-  .filters {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin-top: 20px;
-  }
-
-  .filters button {
-    display: flex;
-    align-items: center;
-  }
-  .filters button > svg {
-    margin-right: 5px;
-  }
 </style>
 
 <div class="container">
-  <h1>Svelte Todo App</h1>
+  <h1 class="title is-1">Svelte Todo App</h1>
+  <TodoFilters
+    on:toggleCompleated={toggleCompleated}
+    on:toggleUncompleated={toggleUncompleated}
+    on:toggleAll={toggleAll}
+    {totalCompleated}
+    {totalUncompleated}
+    {totalTodos} />
   <AddTodo on:addTodo={handleAddTodo} />
 
   <TodoList
@@ -132,58 +125,4 @@
     on:deleteTodo={({ detail }) => handleDeleteTodo(detail)}
     on:editTodo={({ detail }) => handleEditTodo(detail)}
     on:checkTodo={({ detail }) => handleChecked(detail)} />
-
-  <h3>Todo list filters and stats</h3>
-  <div class="filters">
-    <button on:click={toggleCompleated}>
-      <svg
-        viewBox="0 0 24 24"
-        width="24"
-        height="24"
-        stroke="currentColor"
-        stroke-width="2"
-        fill="none"
-        stroke-linecap="round"
-        stroke-linejoin="round">
-        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-        <polyline points="22 4 12 14.01 9 11.01" />
-      </svg>
-      {totalCompleated}
-    </button>
-    <button on:click={toggleUncompleated}>
-      <svg
-        viewBox="0 0 24 24"
-        width="24"
-        height="24"
-        stroke="currentColor"
-        stroke-width="2"
-        fill="none"
-        stroke-linecap="round"
-        stroke-linejoin="round">
-        <circle cx="12" cy="12" r="10" />
-      </svg>
-      {totalUncompleated}
-    </button>
-    <button on:click={toggleAll}>
-      <svg
-        viewBox="0 0 24 24"
-        width="24"
-        height="24"
-        stroke="currentColor"
-        stroke-width="2"
-        fill="none"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="css-i6dzq1">
-        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-        <circle cx="12" cy="12" r="3" />
-      </svg>
-      {totalTodos}
-    </button>
-    <!-- <button on:click={toggleCompleated}>Completed: {totalCompleated}</button>
-    <button on:click={toggleUncompleated}>
-      Uncompleated: {totalUncompleated}
-    </button>
-    <button on:click={toggleAll}>All: {totalTodos}</button> -->
-  </div>
 </div>
