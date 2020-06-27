@@ -42,7 +42,6 @@
   .all {
     stroke: #2196f3;
   }
-  input,
   button {
     font-family: inherit;
   }
