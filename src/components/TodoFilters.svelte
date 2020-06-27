@@ -30,7 +30,17 @@
     align-items: center;
   }
   .filters button > svg {
-    margin-right: 5px;
+    margin-right: 10px;
+  }
+
+  .compleated {
+    stroke: #4caf50;
+  }
+  .uncompleated {
+    stroke: #ff9800;
+  }
+  .all {
+    stroke: #2196f3;
   }
 </style>
 
@@ -44,6 +54,7 @@
       stroke="currentColor"
       stroke-width="2"
       fill="none"
+      class="compleated"
       stroke-linecap="round"
       stroke-linejoin="round">
       <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
@@ -59,6 +70,7 @@
       stroke="currentColor"
       stroke-width="2"
       fill="none"
+      class="uncompleated"
       stroke-linecap="round"
       stroke-linejoin="round">
       <circle cx="12" cy="12" r="10" />
@@ -73,9 +85,9 @@
       stroke="currentColor"
       stroke-width="2"
       fill="none"
+      class="all"
       stroke-linecap="round"
-      stroke-linejoin="round"
-      class="css-i6dzq1">
+      stroke-linejoin="round">
       <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
       <circle cx="12" cy="12" r="3" />
     </svg>

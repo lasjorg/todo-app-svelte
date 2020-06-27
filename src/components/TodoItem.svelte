@@ -28,14 +28,6 @@
   .todo-item {
     display: flex;
     align-items: center;
-    /* width: 100%;
-    margin-bottom: 20px;
-    background-color: white;
-    border-radius: 6px;
-    box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1),
-      0 0px 0 1px rgba(10, 10, 10, 0.02);
-    color: #4a4a4a;
-    padding: 1.25rem; */
   }
   .todo-text {
     flex: 1;
