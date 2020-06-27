@@ -1,19 +1,30 @@
 <script>
   export let totalCompleated, totalUncompleated, totalTodos;
 
+  let isActiveToggleCompleated, isActiveToggleUncompleated, isActiveToggleAll;
+
   import { createEventDispatcher } from 'svelte';
   const dispatch = createEventDispatcher();
 
   const handleToggleCompleated = () => {
     dispatch('toggleCompleated');
+    isActiveToggleCompleated = true;
+    isActiveToggleUncompleated = false;
+    isActiveToggleAll = false;
   };
 
   const handleToggleUncompleated = () => {
     dispatch('toggleUncompleated');
+    isActiveToggleCompleated = false;
+    isActiveToggleUncompleated = true;
+    isActiveToggleAll = false;
   };
 
   const handleToggleAll = () => {
     dispatch('toggleAll');
+    isActiveToggleCompleated = false;
+    isActiveToggleUncompleated = false;
+    isActiveToggleAll = true;
   };
 </script>
 
@@ -32,7 +43,6 @@
   .filters button > svg {
     margin-right: 10px;
   }
-
   .compleated {
     stroke: #4caf50;
   }
@@ -42,6 +52,10 @@
   .all {
     stroke: #2196f3;
   }
+
+  .active {
+    border: 2px solid #2196f3;
+  }
   button {
     font-family: inherit;
   }
@@ -49,7 +63,9 @@
 
 <h3 class="is-size-5">Todo list filters and stats</h3>
 <div class="filters">
-  <button class="button" on:click={handleToggleCompleated}>
+  <button
+    class={isActiveToggleCompleated ? 'button active' : 'button'}
+    on:click={handleToggleCompleated}>
     <svg
       viewBox="0 0 24 24"
       width="24"
@@ -65,7 +81,9 @@
     </svg>
     {totalCompleated}
   </button>
-  <button class="button" on:click={handleToggleUncompleated}>
+  <button
+    class={isActiveToggleUncompleated ? 'button active' : 'button'}
+    on:click={handleToggleUncompleated}>
     <svg
       viewBox="0 0 24 24"
       width="24"
@@ -80,7 +98,9 @@
     </svg>
     {totalUncompleated}
   </button>
-  <button class="button" on:click={handleToggleAll}>
+  <button
+    class={isActiveToggleAll ? 'button active' : 'button'}
+    on:click={handleToggleAll}>
     <svg
       viewBox="0 0 24 24"
       width="24"
