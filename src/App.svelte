@@ -86,9 +86,9 @@
     isCompleted = false;
   };
 
-  afterUpdate(() => {
-    console.log(todos);
-  });
+  // afterUpdate(() => {
+  //   console.log(todos);
+  // });
 </script>
 
 <style>
