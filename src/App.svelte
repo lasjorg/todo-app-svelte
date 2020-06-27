@@ -104,6 +104,7 @@
     justify-content: center;
     align-items: center;
     padding: 0 40px;
+    font-family: 'Poppins', sans-serif;
   }
 </style>
 

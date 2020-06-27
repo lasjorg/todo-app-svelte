@@ -56,6 +56,10 @@
     display: flex;
     padding: 2px;
   }
+  input,
+  button {
+    font-family: inherit;
+  }
 </style>
 
 <div

@@ -42,6 +42,10 @@
   .all {
     stroke: #2196f3;
   }
+  input,
+  button {
+    font-family: inherit;
+  }
 </style>
 
 <h3 class="is-size-5">Todo list filters and stats</h3>
